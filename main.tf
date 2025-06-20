@@ -1,3 +1,13 @@
+provider "azurerm" {
+  features {}
+  use_msi          = false
+  # This tells it to use your `az login` credentials
+  use_cli = true
+  subscription_id = "85f176c2-7103-40b1-ab54-5ffa8ee0f1dd"
+}
+
+
+
 module "azure_files" {
   source              = "./modules/azure_files"
   resource_group_name = var.resource_group_name
@@ -15,6 +25,5 @@ module "ephemeral" {
   storage_account_name    = module.azure_files.storage_account_name
   storage_account_key     = module.azure_files.storage_account_key
   share_name              = module.azure_files.storage_share_name
-  subnet_id               = module.network.subnet_id
-  public_ip_id            = module.network.public_ip_id
 }
+
