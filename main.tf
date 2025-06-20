@@ -4,8 +4,8 @@ module "azure_files" {
   location            = var.location
 }
 
-module "vm" {
-  source                  = "./modules/vm"
+module "ephemeral" {
+  source                  = "./modules/ephemeral"
   vm_name                 = var.vm_name
   location                = var.location
   resource_group_name     = var.resource_group_name

@@ -2,9 +2,11 @@ variable "vm_name" {}
 variable "location" {}
 variable "resource_group_name" {}
 variable "ssh_public_key_path" {}
-variable "subnet_id" {}
-variable "public_ip_id" {}
 
+variable "allowed_ssh_cidr" {
+  description = "CIDR range allowed to SSH into the VM"
+  type        = string
+}
 variable "admin_username" {
   default = "azureuser"
 }

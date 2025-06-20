@@ -10,9 +10,9 @@ resource "azurerm_network_interface" "main" {
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = var.subnet_id
+    subnet_id                     = azurerm_subnet.main.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = var.public_ip_id
+    public_ip_address_id          = azurerm_public_ip.main.id
   }
 }
 
@@ -60,4 +60,27 @@ resource "azurerm_linux_virtual_machine" "main" {
     environment = "exercism"
     created     = local.creation_date
   }
+}
+
+
+resource "azurerm_virtual_network" "main" {
+  name                = "vnet-${local.vm_name_with_date}"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_subnet" "main" {
+  name                 = "subnet-${local.vm_name_with_date}"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_public_ip" "main" {
+  name                = "ip-${local.vm_name_with_date}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = "Static"
+  sku                 = "Basic"
 }
