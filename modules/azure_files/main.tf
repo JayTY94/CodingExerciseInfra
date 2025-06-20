@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "this" {
 
 resource "azurerm_storage_share" "this" {
   name                 = var.share_name
-  storage_account_name = azurerm_storage_account.this.name
+  storage_account_id   = azurerm_storage_account.this.id
   quota                = var.quota_gb
 }
 
