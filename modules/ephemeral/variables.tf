@@ -12,7 +12,7 @@ variable "admin_username" {
 }
 
 variable "vm_size" {
-  default = "Standard_B1s"
+  default = "Standard_B2s"
 }
 
 variable "storage_account_name" {}
