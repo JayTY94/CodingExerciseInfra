@@ -3,6 +3,8 @@ package_update: true
 packages:
   - cifs-utils
   - curl
+  - vim 
+  - nano
 
 runcmd:
   - mkdir -p /mnt/exercism
