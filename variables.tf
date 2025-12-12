@@ -7,7 +7,9 @@ variable "location" {
 variable "resource_group_name" {
   default = "rg-lab"
 }
-variable "ssh_public_key_path" {}
+variable "ssh_public_key_path" {
+  default = "./.rsa/rsa.pub"
+}
 variable "allowed_ssh_cidr" {}
 variable "exercism_token" {
   sensitive = true
