@@ -19,7 +19,7 @@ terraform apply
 
 # Tearing down
 
-Run the following command to tear down the VM, saving costs.
+Run the following command to tear down the module containing the VM, saving costs.
 
 ```
 terraform destroy --target=modules.ephemeral

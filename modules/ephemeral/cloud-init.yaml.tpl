@@ -3,7 +3,7 @@ package_update: true
 packages:
   - cifs-utils
   - curl
-  - vim 
+  - vim
   - nano
 
 runcmd:
@@ -15,3 +15,4 @@ runcmd:
   - mv exercism /usr/local/bin/
   - runuser -l azureuser -c 'exercism configure --workspace=/mnt/exercism --token=${exercism_token}'
   - runuser -l azureuser -c "echo 'export PATH=\$PATH:/usr/local/bin' >> ~/.bashrc"
+  - echo 'Example file created' > /usr/local/example.txt
