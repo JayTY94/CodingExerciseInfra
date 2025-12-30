@@ -1,11 +1,12 @@
 resource "azurerm_linux_virtual_machine" "additional" {
-  count = var.additional_machine_count
-  name                = "additional-machine-${count.index}"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  size                = var.vm_size
-  admin_username      = var.admin_username
-  admin_password = var.default_admin_password
+  count                           = var.additional_machine_count
+  name                            = "additional-machine-${count.index}"
+  location                        = var.location
+  resource_group_name             = var.resource_group_name
+  size                            = var.vm_size
+  admin_username                  = var.admin_username
+  admin_password                  = var.default_admin_password
+  disable_password_authentication = false
 
   network_interface_ids = [
     "${azurerm_network_interface.additional.*.id[count.index]}"
@@ -28,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "additional" {
   computer_name = "additional-machine-${count.index}"
 
 
-#   Mount and provision via cloud-init
+  #   Mount and provision via cloud-init
   custom_data = base64encode(templatefile("${path.module}/cloud-init.yaml.tpl", {
     storage_account_name = var.storage_account_name
     storage_account_key  = var.storage_account_key
@@ -43,7 +44,7 @@ resource "azurerm_linux_virtual_machine" "additional" {
 }
 
 resource "azurerm_network_interface" "additional" {
-  count = var.additional_machine_count
+  count               = var.additional_machine_count
   name                = "additional-machine-nic-${count.index}"
   location            = var.location
   resource_group_name = var.resource_group_name
