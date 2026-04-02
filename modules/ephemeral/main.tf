@@ -84,3 +84,41 @@ resource "azurerm_public_ip" "main" {
   allocation_method   = "Static"
   sku                 = "Basic"
 }
+
+resource "azurerm_network_security_group" "vm_ssh_lockdown" {
+  name                = "nsg-${local.vm_name_with_date}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  security_rule {
+    name                       = "Allow-SSH-From-FHBCorp-IP"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "72.234.233.14/32"
+    destination_address_prefix = "*"
+    description                = "Allow SSH only from my public IP (VS Code Remote SSH)."
+  }
+
+  # Optional explicit deny (default rules already deny inbound not matched)
+  security_rule {
+    name                       = "Deny-All-Inbound"
+    priority                   = 4096
+    direction                  = "Inbound"
+    access                     = "Deny"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+    description                = "Explicit deny for all other inbound traffic."
+  }
+}
+
+resource "azurerm_subnet_network_security_group_association" "practice_subnet_assoc" {
+  subnet_id                 = azurerm_subnet.main.id
+  network_security_group_id = azurerm_network_security_group.vm_ssh_lockdown.id
+}

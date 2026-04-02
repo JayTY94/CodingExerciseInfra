@@ -25,7 +25,7 @@ module "ephemeral" {
   storage_account_name     = module.azure_files.storage_account_name
   storage_account_key      = module.azure_files.storage_account_key
   share_name               = module.azure_files.storage_share_name
-  additional_machine_count = 1
+  additional_machine_count = 0
 }
 
 # module "ephemeral2" {
